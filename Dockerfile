@@ -1,10 +1,13 @@
-FROM python:3.9-slim
+FROM python:3.9
 
 WORKDIR /app
 
-COPY requirements.txt requirements.txt
-RUN pip install -r requirements.txt
+COPY . /app
 
-COPY . .
+ENV FLASK_APP=app/main.py
 
-CMD ["python", "app/main.py"]
+RUN pip install --no-cache-dir -r requirements.txt
+
+EXPOSE 5000
+
+CMD ["flask", "run", "--host=0.0.0.0"]
